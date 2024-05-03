@@ -1,8 +1,5 @@
 .appContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    min-width: 100vw;
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

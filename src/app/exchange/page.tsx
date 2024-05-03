@@ -10,7 +10,7 @@ type Props = {};
 const page: FC<Props> = () => {
   return (
     <MetaMaskContextProvider>
-      <div className={styles.container}>
+      <div className={styles.appContainer}>
         <Navigation />
         <Display />
       </div>

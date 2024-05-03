@@ -1,0 +1,28 @@
+.display {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 30px;
+}
+.walletText {
+  margin: 0;
+}
+.walletInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.exchangeContainer {
+  box-shadow: 0px 0px 5px 3px grey;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 480px){
+    .exchangeContainer {
+        padding: 0;
+        box-shadow: none;    
+    }
+};

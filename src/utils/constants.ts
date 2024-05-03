@@ -11,3 +11,15 @@ export const formatBalance = (rawBalance: string) => {
   export const formatAddress = (addr: string) => {
     return `${addr.substring(0, 8)}...`;
   };
+
+  export const cryptoValue = ['BTC', 'USDT', 'ETH']
+  export const defaultValue = ['USD', 'EUR', 'RUB']
+
+  //Функция определяющая валюту
+  export const chooseValueData = (mode: string, side: string) => {
+    if (mode === "buy" && side === "right") {
+      return defaultValue;
+    } else {
+      return cryptoValue;
+    }
+  };

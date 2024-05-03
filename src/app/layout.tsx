@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { CssBaseline } from "@mui/material";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({weight: ['400', '700'], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Test Stakewolle",
@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${roboto.className} body-container`}>
         <AppRouterCacheProvider>
           <CssBaseline />
           {children}
