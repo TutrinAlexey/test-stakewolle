@@ -50,7 +50,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
     const accounts =
       providedAccounts ||
-      (typeof window !== "undefined" && (await window.ethereum.request({ method: "eth_accounts" })));
+      (await (window as any).ethereum.request({ method: "eth_accounts" }));
 
     if (accounts.length === 0) {
       // If there are no accounts, then the user is disconnected.
@@ -59,13 +59,12 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     }
 
     const balance = formatBalance(
-      typeof window !== 'undefined' &&
-      await window.ethereum.request({
+      await (window as any).ethereum.request({
         method: "eth_getBalance",
         params: [accounts[0], "latest"],
       })
     );
-    const chainId = typeof window !== 'undefined' && await window.ethereum.request({
+    const chainId = (window as any).ethereum.request({
       method: "eth_chainId",
     });
 
@@ -82,9 +81,8 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   const changeChain = async (chainId: string) => {
-    if (typeof window !== 'undefined'){
     try {
-      await window.ethereum.request({
+      await (window as any).ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId }],
       });
@@ -94,7 +92,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         // Do something
         console.log(switchError);
       }
-    }}
+    }
   };
   /**
    * This logic checks if MetaMask is installed. If it is, some event handlers are set up to update
@@ -106,19 +104,21 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       const provider = await detectEthereumProvider({ silent: true });
       setHasProvider(Boolean(provider));
 
-      if (provider && typeof window !== undefined) {
+      if (provider) {
         updateWalletAndAccounts();
-        window.ethereum.on("accountsChanged", updateWallet);
-        window.ethereum.on("chainChanged", updateWalletAndAccounts);
+        (window as any).ethereum.on("accountsChanged", updateWallet);
+        (window as any).ethereum.on("chainChanged", updateWalletAndAccounts);
       }
     };
 
     getProvider();
 
     return () => {
-      if (typeof window !== 'undefined'){
-      window.ethereum?.removeListener("accountsChanged", updateWallet);
-      window.ethereum?.removeListener("chainChanged", updateWalletAndAccounts);}
+      (window as any).ethereum?.removeListener("accountsChanged", updateWallet);
+      (window as any).ethereum?.removeListener(
+        "chainChanged",
+        updateWalletAndAccounts
+      );
     };
   }, [updateWallet, updateWalletAndAccounts]);
 
@@ -126,7 +126,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     setIsConnecting(true);
 
     try {
-      const accounts = typeof window !== 'undefined' && await window.ethereum.request({
+      const accounts = (window as any).ethereum.request({
         method: "eth_requestAccounts",
       });
       clearError();

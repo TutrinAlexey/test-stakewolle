@@ -24,16 +24,17 @@ const Navigation: FC<Props> = () => {
               Install MetaMask
             </a>
           )}
-          {window.ethereum?.isMetaMask && wallet.accounts.length < 1 && (
-            <Button
-              variant="contained"
-              color="secondary"
-              disabled={isConnecting}
-              onClick={connectMetaMask}
-            >
-              Connect MetaMask
-            </Button>
-          )}
+          {(window as any).ethereum?.isMetaMask &&
+            wallet.accounts.length < 1 && (
+              <Button
+                variant="contained"
+                color="secondary"
+                disabled={isConnecting}
+                onClick={connectMetaMask}
+              >
+                Connect MetaMask
+              </Button>
+            )}
           {hasProvider && wallet.accounts.length > 0 && (
             <a
               className={styles.walletlLink}
