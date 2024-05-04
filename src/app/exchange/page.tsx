@@ -7,15 +7,17 @@ import Display from "@/components/Display/Display";
 
 type Props = {};
 
-const page: FC<Props> = () => {
+const ExchangePage: FC<Props> = () => {
   return (
+    (window as any).ethereum ?
     <MetaMaskContextProvider>
       <div className={styles.appContainer}>
         <Navigation />
         <Display />
       </div>
     </MetaMaskContextProvider>
+    : <p>Loading</p>
   );
 };
 
-export default page;
+export default ExchangePage;
