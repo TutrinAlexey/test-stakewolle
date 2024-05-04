@@ -24,7 +24,7 @@ interface MetaMaskContextData {
   isConnecting: boolean;
   connectMetaMask: () => void;
   clearError: () => void;
-  changeChain:(chainId: string) => void;
+  changeChain: (chainId: string) => void;
 }
 
 const disconnectedState: WalletState = {
@@ -50,7 +50,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
     const accounts =
       providedAccounts ||
-      (await window.ethereum.request({ method: "eth_accounts" }));
+      (typeof window !== "undefined" && (await window.ethereum.request({ method: "eth_accounts" })));
 
     if (accounts.length === 0) {
       // If there are no accounts, then the user is disconnected.
@@ -86,11 +86,11 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         method: "wallet_switchEthereumChain",
         params: [{ chainId }],
       });
-    } catch (switchError) {
+    } catch (switchError: any) {
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === 4902) {
         // Do something
-        console.log(switchError)
+        console.log(switchError);
       }
     }
   };
