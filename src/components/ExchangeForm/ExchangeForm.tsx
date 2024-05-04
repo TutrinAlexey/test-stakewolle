@@ -34,18 +34,20 @@ const ExchangeForm: FC<Props> = ({ mode }) => {
     swap ? "right" : "left",
     swap ? rightTabsValue : leftTabsValue
   ).name;
+
   // Курс второго элемента по отношению ко второму, которое отображается под обменником
-  const secondElementOfRate = chooseValueData(
-    mode,
-    swap ? "left" : "right",
-    swap ? leftTabsValue : rightTabsValue
-  ).rateTo[
-    chooseValueData(
-      mode,
-      swap ? "right" : "left",
-      swap ? rightTabsValue : leftTabsValue
-    ).name
-  ];
+  // const secondElementOfRate: any = chooseValueData(
+  //   mode,
+  //   swap ? "left" : "right",
+  //   swap ? leftTabsValue : rightTabsValue
+  // ).rateTo[
+  //   chooseValueData(
+  //     mode,
+  //     swap ? "right" : "left",
+  //     swap ? rightTabsValue : leftTabsValue
+  //   ).name
+  // ];
+  
   useEffect(() => {
     if (mode === "buy") {
       setLeftTabsValue(0);
@@ -62,29 +64,31 @@ const ExchangeForm: FC<Props> = ({ mode }) => {
     }
   }, [mode]);
 
-  //HardCode: Отслеживает и подсчитывает значение для правого инпута
+  // //HardCode: Отслеживает и подсчитывает значение для правого инпута
   useEffect(() => {
     if (swap) {
-      const rightTabName = chooseValueData(mode, "right", rightTabsValue).name;
-      const rate: number = chooseValueData(mode, "left", leftTabsValue).rateTo[
-        rightTabName
-      ];
+      // const rightTabName = chooseValueData(mode, "right", rightTabsValue).name;
+      // const rate: number = chooseValueData(mode, "left", leftTabsValue).rateTo[
+      //   rightTabName
+      // ];
+      const rate = 2323.5;
       setRightInput(Number((leftInput * rate).toFixed(2)));
     } else {
-      const leftTabName = chooseValueData(mode, "left", leftTabsValue).name;
-      const rate: number = chooseValueData(mode, "right", rightTabsValue)
-        .rateTo[leftTabName];
+      // const leftTabName = chooseValueData(mode, "left", leftTabsValue).name;
+      // const rate: number = chooseValueData(mode, "right", rightTabsValue)
+      //   .rateTo[leftTabName];
+      const rate = 2323.5;
       setLeftInput(Number((rightInput * rate).toFixed(2)));
     }
   }, [
     leftInput,
     rightInput,
     swap,
-    setLeftInput,
-    setRightInput,
-    mode,
-    leftTabsValue,
-    rightTabsValue,
+    // setLeftInput,
+    // setRightInput,
+    // mode,
+    // leftTabsValue,
+    // rightTabsValue,
   ]);
 
   const allyProps = (indexProps: number, modeProps: string) => {
@@ -367,7 +371,7 @@ const ExchangeForm: FC<Props> = ({ mode }) => {
         }}
       >
         <p className={`${styles.bottomText} ${styles.exchangeRate}`}>
-          1.00 {firstElementName} = {secondElementOfRate} {secondElementName} 
+          1.00 {firstElementName} = 1000 {secondElementName}
         </p>
         <p className={styles.bottomText}>
           Source:{" "}
