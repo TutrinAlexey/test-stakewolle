@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import styles from "./ExchangeInput.module.css";
 import { Box, FilledInput, InputAdornment, InputLabel } from "@mui/material";
-import { chooseValueData, cryptoValue, defaultValue } from "@/utils/constants";
+import { chooseValueData } from "@/utils/constants";
 
 type Props = {
   mode: string;
@@ -9,6 +9,7 @@ type Props = {
   inputValue: number;
   setInputValue: (value: React.SetStateAction<number>) => void;
   index: number;
+  swapMode: boolean;
 };
 
 const ExchangeInput: FC<Props> = ({
@@ -17,19 +18,27 @@ const ExchangeInput: FC<Props> = ({
   inputValue,
   setInputValue,
   index,
+  swapMode,
 }) => {
-
+  // Функция чтобы при смене сторон лейблы оставались на своих местах
+  const correctSide = useMemo(() => {
+    if (swapMode) {
+      return side === "left" ? "left" : "right";
+    } else {
+      return side === "left" ? "right" : "left";
+    }
+  }, [side, swapMode]);
 
   return (
     <>
-      {mode === "buy" && side === "right" ? (
+      {mode === "buy" && correctSide === "right" ? (
         <Box sx={{ height: "23px" }}></Box>
       ) : (
         <InputLabel
           htmlFor={`${side}-input`}
           sx={{ color: "#000", fontWeight: "bold" }}
         >
-          {side === "left" ? (mode === "buy" ? "Amount" : "From") : "To"}
+          {correctSide === "left" ? (mode === "buy" ? "Amount" : "From") : "To"}
         </InputLabel>
       )}
       <FilledInput
@@ -39,10 +48,10 @@ const ExchangeInput: FC<Props> = ({
         id={`${side}-input`}
         endAdornment={
           <InputAdornment position="end">
-            {chooseValueData(mode, side)[index]}
+            {chooseValueData(mode, side, index).name}
           </InputAdornment>
         }
-        sx={{ color: "#000", fontWeight: "bold", }}
+        sx={{ color: "#000", fontWeight: "bold" }}
         fullWidth={true}
         disableUnderline
         autoComplete="off"

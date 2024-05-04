@@ -1,15 +1,13 @@
 import React, { FC, useState } from "react";
 import styles from "./Display.module.css";
 import { useMetaMask } from "@/hooks/useMetaMask";
-import { formatChainAsNum } from "@/utils/constants";
-import { Box, Tab, Tabs } from "@mui/material";
-import Image from "next/image";
+import { Box, Button, Tab, Tabs } from "@mui/material";
 import ExchangeForm from "../ExchangeForm/ExchangeForm";
 
 type Props = {};
 
 const Display: FC<Props> = () => {
-  const { wallet } = useMetaMask();
+  const { wallet, changeChain } = useMetaMask();
   const [mode, setMode] = useState("buy");
   const [tabsValue, setTabsValue] = useState(0);
 
@@ -28,12 +26,30 @@ const Display: FC<Props> = () => {
     <div className={styles.display}>
       {wallet.accounts.length > 0 && (
         <>
+          <Box sx={{ display: "flex", gap: "20px" }}>
+            <Button
+              aria-label="eth chain"
+              variant="contained"
+              color="primary"
+              onClick={() => changeChain("0x1")}
+            >
+              ETH chain
+            </Button>
+            <Button
+              aria-label="bnb chain"
+              variant="contained"
+              color="primary"
+              onClick={() => changeChain("0x38")}
+            >
+              BNB chain
+            </Button>
+          </Box>
           <Box className={styles.walletInfo}>
             <p className={styles.walletText}>
-              Wallet balance: {wallet.balance}
+              Wallet balance: <span>{wallet.balance}</span>
             </p>
             <p className={styles.walletText}>
-              Wallet accout: {wallet.accounts}
+              Wallet account: <span>{wallet.accounts[0]}</span>
             </p>
           </Box>
           <Box component="section" className={styles.exchangeContainer}>

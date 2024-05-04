@@ -1,25 +1,18 @@
-.inputsContainer {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-.exchangeButton.exchangeButton {
-  border-radius: 50%;
-  min-width: 56px;
-  max-width: 56px;
-  height: 56px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-self: flex-end;
-}
 .exchangeBottom {
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.procent {
+.percent {
   font-weight: bold;
 }
-
-
+.sourceLink {
+  color: #1976d2;
+}
+.bottomText{
+  margin: 0;
+}
+.exchangeRate{
+  width: 200px;
+}

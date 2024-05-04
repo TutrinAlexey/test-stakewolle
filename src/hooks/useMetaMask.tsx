@@ -24,6 +24,7 @@ interface MetaMaskContextData {
   isConnecting: boolean;
   connectMetaMask: () => void;
   clearError: () => void;
+  changeChain:(chainId: string) => void;
 }
 
 const disconnectedState: WalletState = {
@@ -79,6 +80,20 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     [_updateWallet]
   );
 
+  const changeChain = async (chainId: string) => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId }],
+      });
+    } catch (switchError) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (switchError.code === 4902) {
+        // Do something
+        console.log(switchError)
+      }
+    }
+  };
   /**
    * This logic checks if MetaMask is installed. If it is, some event handlers are set up to update
    * the wallet state when MetaMask changes. The function returned by useEffect is used as a
@@ -129,6 +144,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         isConnecting,
         connectMetaMask,
         clearError,
+        changeChain,
       }}
     >
       {children}
