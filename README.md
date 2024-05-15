@@ -16,7 +16,7 @@
 6. React icons
 7. Metamask
 
-## Ссылка на проект задеплоенный на gh-pages
+## Ссылка на проект задеплоенный на vercel
 
 [Проект](https://test-stakewolle-1hh3ia64l-tutrinalexeys-projects.vercel.app)
 
